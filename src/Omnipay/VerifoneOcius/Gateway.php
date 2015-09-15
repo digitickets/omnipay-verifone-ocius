@@ -1,7 +1,7 @@
 <?php
-namespace Omnipay\Verifone;
-use Omnipay\Verifone\Message\CompletePurchaseRequest;
-use Omnipay\Verifone\Message\PurchaseRequest;
+namespace Omnipay\VerifoneOcius;
+use Omnipay\VerifoneOcius\Message\CompletePurchaseRequest;
+use Omnipay\VerifoneOcius\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 /**
  * Verifone Gateway
@@ -40,14 +40,14 @@ class Gateway extends AbstractGateway
     }
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Verifone\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\VerifoneOcius\Message\PurchaseRequest', $parameters);
     }
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Verifone\Message\CompletePurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\VerifoneOcius\Message\CompletePurchaseRequest', $parameters);
     }
     public function refund(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\Verifone\Message\RefundRequest', $parameters);
+        return $this->createRequest('\Omnipay\VerifoneOcius\Message\RefundRequest', $parameters);
     }
 }

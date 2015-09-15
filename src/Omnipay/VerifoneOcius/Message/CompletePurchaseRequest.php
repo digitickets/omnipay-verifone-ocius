@@ -1,5 +1,5 @@
 <?php
-namespace Omnipay\Verifone\Message;
+namespace Omnipay\VerifoneOcius\Message;
 use SimpleXMLElement;
 use Omnipay\Common\Exception\InvalidResponseException;
 /**
