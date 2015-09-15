@@ -1,5 +1,5 @@
 {
-    "name": "pedanticantic/omnipay-verifone",
+    "name": "pedanticantic/omnipay-verifone-ocius",
     "type": "library",
     "description": "Verifone (Ocious) driver for the Omnipay payment processing library",
     "keywords": [
@@ -12,7 +12,7 @@
         "pay",
         "payment"
     ],
-    "homepage": "https://github.com/pedanticantic/omnipay-verifone",
+    "homepage": "https://github.com/pedanticantic/omnipay-verifone-ocius",
     "license": "MIT",
     "authors": [
         {

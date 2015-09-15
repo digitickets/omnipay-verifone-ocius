@@ -2,9 +2,9 @@
 
 **Verifone driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone.png?branch=master)](https://travis-ci.org/omnipay/verifone)
-[![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone/version.png)](https://packagist.org/packages/omnipay/verifone)
-[![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone)
+[![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/omnipay/verifone)
+[![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
+[![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone-ocius)
 
 This driver supports the remote Verifone Payment Gateway (Ocious) service. Payment information is sent and received via XML messages. Customers typically stay on the originating website with this method of integration.
 
@@ -16,7 +16,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "pedanticantic/omnipay-verifone": "~2.0"
+        "pedanticantic/omnipay-verifone-ocius": "~2.0"
     }
 }
 ```
