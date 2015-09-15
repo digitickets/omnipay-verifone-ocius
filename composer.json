@@ -1,0 +1,45 @@
+{
+    "name": "pedanticantic/omnipay-verifone",
+    "type": "library",
+    "description": "Verifone (Ocious) driver for the Omnipay payment processing library",
+    "keywords": [
+        "verifone",
+        "ocious",
+        "commidea",
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment"
+    ],
+    "homepage": "https://github.com/pedanticantic/omnipay-verifone",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Glenn Jenkins",
+            "email": "pedanticantic@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Omnipay\\Evo\\" : "src/" }
+    },
+    "require": {
+        "omnipay/common": "2.*",
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "guzzle/plugin-mock": "~3.1",
+        "mockery/mockery": "~0.8",
+        "omnipay/tests": "2.*",
+        "phpunit/phpunit": "~3.7.16",
+        "squizlabs/php_codesniffer": "~1.4.4"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.9.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
