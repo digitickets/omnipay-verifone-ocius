@@ -1,10 +1,10 @@
 {
     "name": "pedanticantic/omnipay-verifone-ocius",
     "type": "library",
-    "description": "Verifone (Ocious) driver for the Omnipay payment processing library",
+    "description": "Verifone (Ocius) driver for the Omnipay payment processing library",
     "keywords": [
         "verifone",
-        "ocious",
+        "ocius",
         "commidea",
         "gateway",
         "merchant",

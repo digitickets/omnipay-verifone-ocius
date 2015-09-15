@@ -6,7 +6,7 @@
 [![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
 [![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone-ocius)
 
-This driver supports the remote Verifone Payment Gateway (Ocious) service. Payment information is sent and received via XML messages. Customers typically stay on the originating website with this method of integration.
+This driver supports the remote Verifone Payment Gateway (Ocius) service. Payment information is sent and received via XML messages. Customers typically stay on the originating website with this method of integration.
 
 ## Installation
 
