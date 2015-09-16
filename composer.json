@@ -22,7 +22,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Omnipay\\Evo\\" : "src/" }
+        "psr-0": { "Omnipay\\VerifoneOcius\\" : "src/" }
     },
     "require": {
         "omnipay/common": "2.*",
