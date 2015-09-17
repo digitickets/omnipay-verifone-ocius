@@ -9,7 +9,7 @@ use Omnipay\Common\Message\AbstractRequest;
 class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'TBA';
-    protected $testEndpoint = 'https://txn-test.cxmlpg.com/XML4/commideagateway.asmx';
+    protected $testEndpoint = 'TBA'; // May be able to remove these EndPoints
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');
