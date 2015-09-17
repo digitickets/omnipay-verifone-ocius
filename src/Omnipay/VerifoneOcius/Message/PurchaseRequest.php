@@ -141,12 +141,13 @@ class PurchaseRequest extends AbstractRequest
         $basketItemsXml = $basketXml->addChild('basketitems');
         foreach($this->getItems() as $item) {
             $basketItemXml = $basketItemsXml->addChild('basketitem');
-            
-            $basketItemXml->addChild('lineamount', sprintf('%0.2f', $item->getPrice() * $item->getQuantity()));
+
+            $basketItemXml->addChild('productname', htmlentities($item->getName()));
             $basketItemXml->addChild('quantity', $item->getQuantity());
             $basketItemXml->addChild('unitamount', $item->getPrice());
             $basketItemXml->addChild('vatamount', '0');
             $basketItemXml->addChild('vatrate', '0');
+            $basketItemXml->addChild('lineamount', sprintf('%0.2f', $item->getPrice() * $item->getQuantity()));
         }
         
         $requestDataXml->addChild('processingidentifier', '1');
