@@ -43,10 +43,7 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('amount', 'card', 'transactionId');
-        $this->getCard()->validate();
-        
-        $data = $this->getPostdataInputValue();
+        $data = array('postdata' => $this->getPostdataInputValue());
         
         return $data;
     }
@@ -106,24 +103,56 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml->addChild('merchantid', $this->getMerchantId());
         $merchantXml->addChild('systemguid', $this->getSystemGuid());
 
-        $requestDataXml->addChild('merchantreference', 'xxx'); // TBA
-        $requestDataXml->addChild('returnurl', 'xxx'); // TBA
+        $requestDataXml->addChild('merchantreference', $this->getParameter('transactionId'));
+        $requestDataXml->addChild('returnurl', $this->getParameter('returnUrl'));
         $requestDataXml->addChild('template', '');
         $requestDataXml->addChild('capturemethod', '12');
 
-        $customerXml = $requestDataXml->addChild('customer', '');
-        // TBA - address
-        // TBA - basket
-        // TBA - deliveryaddress
+        $card = $this->getCard();
+        $customerXml = $requestDataXml->addChild('customer');
         $customerXml->addChild('deliveryedit', 'false');
-        $customerXml->addChild('email', 'xxx@xxx.co.uk');
-        $customerXml->addChild('firstname', 'Xxx');
-        $customerXml->addChild('lastname', 'xx');
+        if ($card) {
+            $customerXml->addChild('email', $card->getEmail());
+            $customerXml->addChild('firstname', $card->getFirstName());
+            $customerXml->addChild('lastname', $card->getLastName());
+            
+            $billingAddressXml = $customerXml->addChild('address');
+            $billingAddressXml->addChild('address1', $card->getBillingAddress1());
+            $billingAddressXml->addChild('address2', $card->getBillingAddress2());
+            $billingAddressXml->addChild('country', $card->getBillingCountry());
+            $billingAddressXml->addChild('postcode', $card->getBillingPostcode());
+            $billingAddressXml->addChild('town', $card->getBillingCity());
+            
+            $deliveryAddressXml = $customerXml->addChild('deliveryaddress');
+            $deliveryAddressXml->addChild('address1', $card->getShippingAddress1());
+            $deliveryAddressXml->addChild('address2', $card->getShippingAddress2());
+            $deliveryAddressXml->addChild('country', $card->getShippingCountry());
+            $deliveryAddressXml->addChild('postcode', $card->getShippingPostcode());
+            $deliveryAddressXml->addChild('town', $card->getShippingCity());
+        }
+        $basketXml = $customerXml->addChild('basket');
+        $basketXml->addChild('Shippingamount', $this->getAmount());
+        $basketXml->addChild('Totalamount', $this->getAmount());
+        $basketXml->addChild('Vatamount', 0);
 
+        /**
+         * @var \Omnipay\Common\Item $item
+         */
+        $basketItemsXml = $basketXml->addChild('basketitems');
+        foreach($this->getItems() as $item) {
+            $basketItemXml = $basketItemsXml->addChild('basketitem');
+            
+            $basketItemXml->addChild('lineamount', sprintf('%0.2f', $item->getPrice() * $item->getQuantity()));
+            $basketItemXml->addChild('quantity', $item->getQuantity());
+            $basketItemXml->addChild('unitamount', $item->getPrice());
+            $basketItemXml->addChild('vatamount', '0');
+            $basketItemXml->addChild('vatrate', '0');
+        }
+        
         $requestDataXml->addChild('processingidentifier', '1');
         $requestDataXml->addChild('registertoken', 'false');
         $requestDataXml->addChild('showorderconfirmation', 'false');
-        $requestDataXml->addChild('transactionvalue', '99.99'); // TBA
+        $requestDataXml->addChild('transactionvalue', $this->getAmount());
 
         return $requestDataXml->asXML();
 
