@@ -17,11 +17,12 @@ class PurchaseRequest extends AbstractRequest
         $defaultParameters = [
             'apiVersion' => '2',
             'allowedPaymentMethods' => '1',
+            'showPaymentResult' => 'true',
             'captureMethod' => '12',
             'deliveryEdit' => 'false',
             'processingIdentifier' => '1',
             'registerToken' => 'false',
-            'showOrderConfirmation' => 'false'
+            'showOrderConfirmation' => 'true'
         ];
         foreach($defaultParameters as $key => $value) {
             $this->setParameter($key, $value);
@@ -70,6 +71,14 @@ class PurchaseRequest extends AbstractRequest
     public function setAllowedPaymentMethods($value)
     {
         return $this->setParameter('allowedPaymentMethods', $value);
+    }
+    public function getShowPaymentResult()
+    {
+        return $this->getParameter('showPaymentResult');
+    }
+    public function setShowPaymentResult($value)
+    {
+        return $this->setParameter('showPaymentResult', $value);
     }
     public function getCaptureMethod()
     {
@@ -145,17 +154,17 @@ class PurchaseRequest extends AbstractRequest
     {
         // Build the post data, which contains the request data.
         $postDataXml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><postdata/>');
-        $postDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $postDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
+        $postDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 
         $postDataXml->addChild('api', $this->getApiVersion());
         $postDataXml->addChild('merchantid', $this->getMerchantId());
         $postDataXml->addChild('requesttype', 'eftrequest');
         $postDataXml->addChild('requestdata', $this->getRequestdataInputValue());
         $postDataXml->addChild('keyname');
-
-        $postData = $this->htmlencode($this->htmlencode($postDataXml->asXML()));
-
+        
+        $postData = $this->doubleEncode($postDataXml->asXML());
+        
         return $postData;
     }
 
@@ -170,12 +179,13 @@ class PurchaseRequest extends AbstractRequest
         // Build the request data. This XML gets put into a single element
         // of the post data.
         $requestDataXml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><eftrequest/>');
-        $requestDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $requestDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
+        $requestDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 
         $requestDataXml->addChild('accountid', $this->getAccountId());
         $requestDataXml->addChild('allowedpaymentmethods', $this->getAllowedPaymentMethods());
-
+        $requestDataXml->addChild('showpaymentresult', $this->getShowPaymentResult());
+        
         $merchantXml = $requestDataXml->addChild('merchant');
         $merchantXml->addChild('merchantid', $this->getMerchantId());
         $merchantXml->addChild('systemguid', $this->getSystemGuid());
@@ -208,9 +218,9 @@ class PurchaseRequest extends AbstractRequest
             $deliveryAddressXml->addChild('town', $card->getShippingCity());
         }
         $basketXml = $customerXml->addChild('basket');
-        $basketXml->addChild('Shippingamount', 0);
-        $basketXml->addChild('Totalamount', $this->getAmount());
-        $basketXml->addChild('Vatamount', 0);
+        $basketXml->addChild('shippingamount', '0.00');
+        $basketXml->addChild('totalamount', $this->getAmount());
+        $basketXml->addChild('vatamount', '0.00');
 
         /**
          * @var \Omnipay\Common\Item $item
@@ -219,11 +229,11 @@ class PurchaseRequest extends AbstractRequest
         foreach($this->getItems() as $item) {
             $basketItemXml = $basketItemsXml->addChild('basketitem');
 
-            $basketItemXml->addChild('productname', htmlentities($item->getName()));
+            $basketItemXml->addChild('productname', $this->doubleEncode($item->getName()));
             $basketItemXml->addChild('quantity', $item->getQuantity());
             $basketItemXml->addChild('unitamount', $item->getPrice());
-            $basketItemXml->addChild('vatamount', '0');
-            $basketItemXml->addChild('vatrate', '0');
+            $basketItemXml->addChild('vatamount', '0.00');
+            $basketItemXml->addChild('vatrate', '0.00');
             $basketItemXml->addChild('lineamount', sprintf('%0.2f', $item->getPrice() * $item->getQuantity()));
         }
         
@@ -237,13 +247,17 @@ class PurchaseRequest extends AbstractRequest
     }
 
     /**
-     * Method to html-encode the given string.
+     * Method to double-encode the given string.
      * @param $htmlString string
+     * @param $flags      int Any specific flags you want to use.
      * 
      * @return string
      */
-    protected function htmlencode($htmlString)
+    protected function doubleEncode($htmlString, $flags = ENT_XML1)
     {
-        return $htmlString; //htmlentities($htmlString, ENT_QUOTES, 'UTF-8', false);
+        for($i = 0 ; $i < 2 ; $i++) {
+            $htmlString = htmlentities($htmlString, $flags);
+        }
+        return $htmlString;
     }
 }
