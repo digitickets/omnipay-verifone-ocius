@@ -10,26 +10,6 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'TBA';
     protected $testEndpoint = 'https://paypage2-test.cxmlpg.com/paypage.aspx';
-    
-    public function initialize(array $parameters = array())
-    {
-        parent::initialize($parameters);
-        $defaultParameters = [
-            'apiVersion' => '2',
-            'allowedPaymentMethods' => '1',
-            'showPaymentResult' => 'true',
-            'captureMethod' => '12',
-            'deliveryEdit' => 'false',
-            'processingIdentifier' => '1',
-            'registerToken' => 'false',
-            'showOrderConfirmation' => 'true'
-        ];
-        foreach($defaultParameters as $key => $value) {
-            $this->setParameter($key, $value);
-        }
-        
-        return $this;
-    }
 
     public function setAccountId($value)
     {
@@ -96,7 +76,6 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('deliveryEdit', $value);
     }
-
     public function getProcessingIdentifier()
     {
         return $this->getParameter('processingIdentifier');
