@@ -1,6 +1,6 @@
 <?php
 namespace Omnipay\VerifoneOcius\Message;
-use DOMDocument;
+
 use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractRequest;
 /**
@@ -10,6 +10,25 @@ class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'TBA';
     protected $testEndpoint = 'https://paypage2-test.cxmlpg.com/paypage.aspx';
+    
+    public function initialize(array $parameters = array())
+    {
+        parent::initialize($parameters);
+        $defaultParameters = [
+            'apiVersion' => '2',
+            'allowedPaymentMethods' => '1',
+            'captureMethod' => '12',
+            'deliveryEdit' => 'false',
+            'processingIdentifier' => '1',
+            'registerToken' => 'false',
+            'showOrderConfirmation' => 'false'
+        ];
+        foreach($defaultParameters as $key => $value) {
+            $this->setParameter($key, $value);
+        }
+        
+        return $this;
+    }
 
     public function setAccountId($value)
     {
@@ -34,6 +53,64 @@ class PurchaseRequest extends AbstractRequest
     public function setSystemGuid($value)
     {
         return $this->setParameter('systemGuid', $value);
+    }
+
+    public function getApiVersion()
+    {
+        return $this->getParameter('apiVersion');
+    }
+    public function setApiVersion($value)
+    {
+        return $this->setParameter('apiVersion', $value);
+    }
+    public function getAllowedPaymentMethods()
+    {
+        return $this->getParameter('allowedPaymentMethods');
+    }
+    public function setAllowedPaymentMethods($value)
+    {
+        return $this->setParameter('allowedPaymentMethods', $value);
+    }
+    public function getCaptureMethod()
+    {
+        return $this->getParameter('captureMethod');
+    }
+    public function setCaptureMethod($value)
+    {
+        return $this->setParameter('captureMethod', $value);
+    }
+    public function getDeliveryEdit()
+    {
+        return $this->getParameter('deliveryEdit');
+    }
+    public function setDeliveryEdit($value)
+    {
+        return $this->setParameter('deliveryEdit', $value);
+    }
+
+    public function getProcessingIdentifier()
+    {
+        return $this->getParameter('processingIdentifier');
+    }
+    public function setProcessingIdentifier($value)
+    {
+        return $this->setParameter('processingIdentifier', $value);
+    }
+    public function getRegisterToken()
+    {
+        return $this->getParameter('registerToken');
+    }
+    public function setRegisterToken($value)
+    {
+        return $this->setParameter('registerToken', $value);
+    }
+    public function getShowOrderConfirmation()
+    {
+        return $this->getParameter('showOrderConfirmation');
+    }
+    public function setShowOrderConfirmation($value)
+    {
+        return $this->setParameter('showOrderConfirmation', $value);
     }
     
     public function getEndpoint()
@@ -71,13 +148,13 @@ class PurchaseRequest extends AbstractRequest
         $postDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $postDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
 
-        $postDataXml->addChild('api', 2);
+        $postDataXml->addChild('api', $this->getApiVersion());
         $postDataXml->addChild('merchantid', $this->getMerchantId());
         $postDataXml->addChild('requesttype', 'eftrequest');
         $postDataXml->addChild('requestdata', $this->getRequestdataInputValue());
         $postDataXml->addChild('keyname');
 
-        $postData = htmlentities(htmlentities($postDataXml->asXML()));
+        $postData = $this->htmlencode($this->htmlencode($postDataXml->asXML()));
 
         return $postData;
     }
@@ -97,7 +174,7 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
 
         $requestDataXml->addChild('accountid', $this->getAccountId());
-        $requestDataXml->addChild('allowedpaymentmethods', '1');
+        $requestDataXml->addChild('allowedpaymentmethods', $this->getAllowedPaymentMethods());
 
         $merchantXml = $requestDataXml->addChild('merchant');
         $merchantXml->addChild('merchantid', $this->getMerchantId());
@@ -106,11 +183,11 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->addChild('merchantreference', $this->getParameter('transactionId'));
         $requestDataXml->addChild('returnurl', $this->getParameter('returnUrl'));
         $requestDataXml->addChild('template', '');
-        $requestDataXml->addChild('capturemethod', '12');
+        $requestDataXml->addChild('capturemethod', $this->getCaptureMethod());
 
-        $card = $this->getCard();
         $customerXml = $requestDataXml->addChild('customer');
-        $customerXml->addChild('deliveryedit', 'false');
+        $customerXml->addChild('deliveryedit', $this->getDeliveryEdit());
+        $card = $this->getCard();
         if ($card) {
             $customerXml->addChild('email', $card->getEmail());
             $customerXml->addChild('firstname', $card->getFirstName());
@@ -131,7 +208,7 @@ class PurchaseRequest extends AbstractRequest
             $deliveryAddressXml->addChild('town', $card->getShippingCity());
         }
         $basketXml = $customerXml->addChild('basket');
-        $basketXml->addChild('Shippingamount', $this->getAmount());
+        $basketXml->addChild('Shippingamount', 0);
         $basketXml->addChild('Totalamount', $this->getAmount());
         $basketXml->addChild('Vatamount', 0);
 
@@ -150,12 +227,23 @@ class PurchaseRequest extends AbstractRequest
             $basketItemXml->addChild('lineamount', sprintf('%0.2f', $item->getPrice() * $item->getQuantity()));
         }
         
-        $requestDataXml->addChild('processingidentifier', '1');
-        $requestDataXml->addChild('registertoken', 'false');
-        $requestDataXml->addChild('showorderconfirmation', 'false');
+        $requestDataXml->addChild('processingidentifier', $this->getProcessingIdentifier());
+        $requestDataXml->addChild('registertoken', $this->getRegisterToken());
+        $requestDataXml->addChild('showorderconfirmation', $this->getShowOrderConfirmation());
         $requestDataXml->addChild('transactionvalue', $this->getAmount());
 
         return $requestDataXml->asXML();
 
+    }
+
+    /**
+     * Method to html-encode the given string.
+     * @param $htmlString string
+     * 
+     * @return string
+     */
+    protected function htmlencode($htmlString)
+    {
+        return $htmlString; //htmlentities($htmlString, ENT_QUOTES, 'UTF-8', false);
     }
 }

@@ -15,14 +15,6 @@ class Gateway extends AbstractGateway
     {
         return 'Verifone';
     }
-    public function getDefaultParameters()
-    {
-        return array(
-            'accountId' => '',
-            'merchantId' => '',
-            'systemGuid' => ''
-        );
-    }
     
     public function purchase(array $parameters = array())
     {
