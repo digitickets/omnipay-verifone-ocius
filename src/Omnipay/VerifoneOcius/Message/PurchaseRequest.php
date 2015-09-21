@@ -100,7 +100,7 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('showOrderConfirmation', $value);
     }
-    
+
     public function getEndpoint()
     {
         return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
@@ -118,7 +118,7 @@ class PurchaseRequest extends AbstractRequest
 
         return $data;
     }
-    
+
     /**
      * @param SimpleXMLElement $data
      * @return \Omnipay\Common\Message\ResponseInterface|Response
@@ -185,22 +185,22 @@ class PurchaseRequest extends AbstractRequest
         $card = $this->getCard();
         if ($card) {
             $customerXml->email = $card->getEmail();
-            $customerXml->firstname = $card->getFirstName();
-            $customerXml->lastname = $card->getLastName();
+            $customerXml->firstname = $this->transliterate($card->getFirstName());
+            $customerXml->lastname = $this->transliterate($card->getLastName());
 
             $billingAddressXml = $customerXml->addChild('address');
-            $billingAddressXml->address1 = $card->getBillingAddress1();
-            $billingAddressXml->address2 = $card->getBillingAddress2();
-            $billingAddressXml->country = $card->getBillingCountry();
-            $billingAddressXml->postcode = $card->getBillingPostcode();
-            $billingAddressXml->town = $card->getBillingCity();
+            $billingAddressXml->address1 = $this->transliterate($card->getBillingAddress1());
+            $billingAddressXml->address2 = $this->transliterate($card->getBillingAddress2());
+            $billingAddressXml->country = $this->transliterate($card->getBillingCountry());
+            $billingAddressXml->postcode = $this->transliterate($card->getBillingPostcode());
+            $billingAddressXml->town = $this->transliterate($card->getBillingCity());
 
             $deliveryAddressXml = $customerXml->addChild('deliveryaddress');
-            $deliveryAddressXml->address1 = $card->getShippingAddress1();
-            $deliveryAddressXml->address2 = $card->getShippingAddress2();
-            $deliveryAddressXml->country = $card->getShippingCountry();
-            $deliveryAddressXml->postcode = $card->getShippingPostcode();
-            $deliveryAddressXml->town = $card->getShippingCity();
+            $deliveryAddressXml->address1 = $this->transliterate($card->getShippingAddress1());
+            $deliveryAddressXml->address2 = $this->transliterate($card->getShippingAddress2());
+            $deliveryAddressXml->country = $this->transliterate($card->getShippingCountry());
+            $deliveryAddressXml->postcode = $this->transliterate($card->getShippingPostcode());
+            $deliveryAddressXml->town = $this->transliterate($card->getShippingCity());
         }
         $basketXml = $customerXml->addChild('basket');
         $basketXml->shippingamount = '0.00';
@@ -213,7 +213,6 @@ class PurchaseRequest extends AbstractRequest
         $basketItemsXml = $basketXml->addChild('basketitems');
         foreach($this->getItems() as $item) {
             $basketItemXml = $basketItemsXml->addChild('basketitem');
-
             $basketItemXml->productname = $item->getName();
             $basketItemXml->quantity = $item->getQuantity();
             $basketItemXml->unitamount = $item->getPrice();
@@ -228,5 +227,23 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->transactionvalue = $this->getAmount();
 
         return $requestDataXml->asXML();
+    }
+
+    /**
+     * This gateway can only cope with basic ASCII values for things like customer
+     * names and addresses. Therefore, this method exists to make sure UTF-8 characters
+     * are converted to something appropriate.
+     * Eg. "Card holder name value must consist of alphanumerics and the following characters only , . ' - \ / &"
+     *
+     * @param $string
+     *
+     * @return mixed
+     */
+    private function transliterate($string)
+    {
+        $string = transliterator_transliterate('Latin-ASCII;', $string);
+        $string = preg_replace('/[^a-z0-9 \-&\.,\']/i', '', $string);
+
+        return $string;
     }
 }
