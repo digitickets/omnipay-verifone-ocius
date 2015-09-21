@@ -13,8 +13,6 @@ class GatewayTest extends GatewayTestCase
 
     public function testStub()
     {
-        $this->setMockHttpResponse('DirectPurchaseSuccess.txt');
-
         $this->assertSame(1, 1);
     }
 }
