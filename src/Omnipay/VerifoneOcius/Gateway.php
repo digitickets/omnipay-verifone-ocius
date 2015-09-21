@@ -133,8 +133,4 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\VerifoneOcius\Message\RefundRequest', $parameters);
     }
-    
-    public function PaymentPageUrl() {
-        return $this->getTestMode() ? $this->testPaymentPageUrl : $this->livePaymentPageUrl;
-    }
 }
