@@ -16,22 +16,27 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('accountId', $value);
     }
+
     protected function getAccountId()
     {
         return $this->getParameter('accountId');
     }
+
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');
     }
+
     public function setMerchantId($value)
     {
         return $this->setParameter('merchantId', $value);
     }
+
     public function getSystemGuid()
     {
         return $this->getParameter('systemGuid');
     }
+
     public function setSystemGuid($value)
     {
         return $this->setParameter('systemGuid', $value);
@@ -41,62 +46,77 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->getParameter('apiVersion');
     }
+
     public function setApiVersion($value)
     {
         return $this->setParameter('apiVersion', $value);
     }
+
     public function getAllowedPaymentMethods()
     {
         return $this->getParameter('allowedPaymentMethods');
     }
+
     public function setAllowedPaymentMethods($value)
     {
         return $this->setParameter('allowedPaymentMethods', $value);
     }
+
     public function getShowPaymentResult()
     {
         return $this->getParameter('showPaymentResult');
     }
+
     public function setShowPaymentResult($value)
     {
         return $this->setParameter('showPaymentResult', $value);
     }
+
     public function getCaptureMethod()
     {
         return $this->getParameter('captureMethod');
     }
+
     public function setCaptureMethod($value)
     {
         return $this->setParameter('captureMethod', $value);
     }
+
     public function getDeliveryEdit()
     {
         return $this->getParameter('deliveryEdit');
     }
+
     public function setDeliveryEdit($value)
     {
         return $this->setParameter('deliveryEdit', $value);
     }
+
     public function getProcessingIdentifier()
     {
         return $this->getParameter('processingIdentifier');
     }
+
     public function setProcessingIdentifier($value)
     {
         return $this->setParameter('processingIdentifier', $value);
     }
+
     public function getRegisterToken()
     {
         return $this->getParameter('registerToken');
     }
+
     public function setRegisterToken($value)
     {
         return $this->setParameter('registerToken', $value);
     }
+
     public function getShowOrderConfirmation()
     {
         return $this->getParameter('showOrderConfirmation');
     }
+
     public function setShowOrderConfirmation($value)
     {
         return $this->setParameter('showOrderConfirmation', $value);
@@ -122,6 +142,7 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @param SimpleXMLElement $data
+     *
      * @return \Omnipay\Common\Message\ResponseInterface|Response
      */
     public function sendData($data)
@@ -139,9 +160,17 @@ class PurchaseRequest extends AbstractRequest
     protected function getOuterXml()
     {
         // Build the post data, which contains the request data.
-        $postDataXml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><postdata/>');
-        $postDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
-        $postDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $postDataXml = new SimpleXMLElement(
+            '<?xml version="1.0" encoding="utf-8"?><postdata/>'
+        );
+        $postDataXml->addAttribute(
+            'xmlns:xmlns:xsd',
+            'http://www.w3.org/2001/XMLSchema'
+        );
+        $postDataXml->addAttribute(
+            'xmlns:xmlns:xsi',
+            'http://www.w3.org/2001/XMLSchema-instance'
+        );
 
         $postDataXml->api = $this->getApiVersion();
         $postDataXml->merchantid = $this->getMerchantId();
@@ -164,19 +193,30 @@ class PurchaseRequest extends AbstractRequest
     {
         // Build the request data. This XML gets put into a single element
         // of the post data.
-        $requestDataXml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><eftrequest/>');
-        $requestDataXml->addAttribute('xmlns:xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
-        $requestDataXml->addAttribute('xmlns:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $requestDataXml = new SimpleXMLElement(
+            '<?xml version="1.0" encoding="utf-8"?><eftrequest/>'
+        );
+        $requestDataXml->addAttribute(
+            'xmlns:xmlns:xsd',
+            'http://www.w3.org/2001/XMLSchema'
+        );
+        $requestDataXml->addAttribute(
+            'xmlns:xmlns:xsi',
+            'http://www.w3.org/2001/XMLSchema-instance'
+        );
 
         $requestDataXml->accountid = $this->getAccountId();
-        $requestDataXml->allowedpaymentmethods = $this->getAllowedPaymentMethods();
+        $requestDataXml->allowedpaymentmethods
+            = $this->getAllowedPaymentMethods();
         $requestDataXml->showpaymentresult = $this->getShowPaymentResult();
 
         $merchantXml = $requestDataXml->addChild('merchant');
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
 
-        $requestDataXml->merchantreference = $this->getParameter('transactionId');
+        $requestDataXml->merchantreference = $this->getParameter(
+            'transactionId'
+        );
         $requestDataXml->returnurl = $this->getParameter('returnUrl');
         $requestDataXml->template = '';
         $requestDataXml->capturemethod = $this->getCaptureMethod();
@@ -186,22 +226,44 @@ class PurchaseRequest extends AbstractRequest
         $card = $this->getCard();
         if ($card) {
             $customerXml->email = $card->getEmail();
-            $customerXml->firstname = $this->transliterate($card->getFirstName());
+            $customerXml->firstname = $this->transliterate(
+                $card->getFirstName()
+            );
             $customerXml->lastname = $this->transliterate($card->getLastName());
 
             $billingAddressXml = $customerXml->addChild('address');
-            $billingAddressXml->address1 = $this->transliterate($card->getBillingAddress1());
-            $billingAddressXml->address2 = $this->transliterate($card->getBillingAddress2());
-            $billingAddressXml->country = $this->transliterate($card->getBillingCountry());
-            $billingAddressXml->postcode = $this->transliterate($card->getBillingPostcode());
-            $billingAddressXml->town = $this->transliterate($card->getBillingCity());
+            $billingAddressXml->address1 = $this->transliterate(
+                $card->getBillingAddress1()
+            );
+            $billingAddressXml->address2 = $this->transliterate(
+                $card->getBillingAddress2()
+            );
+            $billingAddressXml->country = $this->transliterate(
+                $card->getBillingCountry()
+            );
+            $billingAddressXml->postcode = $this->transliterate(
+                $card->getBillingPostcode()
+            );
+            $billingAddressXml->town = $this->transliterate(
+                $card->getBillingCity()
+            );
 
             $deliveryAddressXml = $customerXml->addChild('deliveryaddress');
-            $deliveryAddressXml->address1 = $this->transliterate($card->getShippingAddress1());
-            $deliveryAddressXml->address2 = $this->transliterate($card->getShippingAddress2());
-            $deliveryAddressXml->country = $this->transliterate($card->getShippingCountry());
-            $deliveryAddressXml->postcode = $this->transliterate($card->getShippingPostcode());
-            $deliveryAddressXml->town = $this->transliterate($card->getShippingCity());
+            $deliveryAddressXml->address1 = $this->transliterate(
+                $card->getShippingAddress1()
+            );
+            $deliveryAddressXml->address2 = $this->transliterate(
+                $card->getShippingAddress2()
+            );
+            $deliveryAddressXml->country = $this->transliterate(
+                $card->getShippingCountry()
+            );
+            $deliveryAddressXml->postcode = $this->transliterate(
+                $card->getShippingPostcode()
+            );
+            $deliveryAddressXml->town = $this->transliterate(
+                $card->getShippingCity()
+            );
         }
         $basketXml = $customerXml->addChild('basket');
         $basketXml->shippingamount = '0.00';
@@ -212,19 +274,24 @@ class PurchaseRequest extends AbstractRequest
          * @var \Omnipay\Common\Item $item
          */
         $basketItemsXml = $basketXml->addChild('basketitems');
-        foreach($this->getItems() as $item) {
+        foreach ($this->getItems() as $item) {
             $basketItemXml = $basketItemsXml->addChild('basketitem');
             $basketItemXml->productname = $item->getName();
             $basketItemXml->quantity = $item->getQuantity();
             $basketItemXml->unitamount = $item->getPrice();
             $basketItemXml->vatamount = '0.00';
             $basketItemXml->vatrate = '0.00';
-            $basketItemXml->lineamount = sprintf('%0.2f', $item->getPrice() * $item->getQuantity());
+            $basketItemXml->lineamount = sprintf(
+                '%0.2f',
+                $item->getPrice() * $item->getQuantity()
+            );
         }
 
-        $requestDataXml->processingidentifier = $this->getProcessingIdentifier();
+        $requestDataXml->processingidentifier = $this->getProcessingIdentifier(
+        );
         $requestDataXml->registertoken = $this->getRegisterToken();
-        $requestDataXml->showorderconfirmation = $this->getShowOrderConfirmation();
+        $requestDataXml->showorderconfirmation
+            = $this->getShowOrderConfirmation();
         $requestDataXml->transactionvalue = $this->getAmount();
 
         return $requestDataXml->asXML();
