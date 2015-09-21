@@ -108,6 +108,8 @@ class PurchaseRequest extends AbstractRequest
 
     public function getData()
     {
+        $this->validate('accountId', 'merchantId', 'systemGuid', 'amount');
+
         $xmlDoc = $this->getOuterXml();
         // they really do want it double encoded!
         $xmlDoc = htmlentities($xmlDoc, ENT_QUOTES, 'UTF-8', true);
