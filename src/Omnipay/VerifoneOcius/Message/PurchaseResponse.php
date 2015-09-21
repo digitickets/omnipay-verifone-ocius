@@ -8,8 +8,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 /**
  * Verifone Ocius Purchase Response
  */
-class PurchaseResponse extends AbstractResponse
-    implements RedirectResponseInterface
+class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     public function isSuccessful()
     {
