@@ -1,7 +1,9 @@
 <?php
 namespace Omnipay\VerifoneOcius\Message;
+
 use SimpleXMLElement;
 use Omnipay\Common\Exception\InvalidResponseException;
+
 /**
  * Verifone Complete Purchase Request
  */

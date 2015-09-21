@@ -3,6 +3,7 @@ namespace Omnipay\VerifoneOcius\Message;
 
 use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractRequest;
+
 /**
  * Verifone Purchase Request
  */

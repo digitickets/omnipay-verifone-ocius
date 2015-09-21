@@ -4,6 +4,7 @@ namespace Omnipay\VerifoneOcius;
 use Omnipay\VerifoneOcius\Message\CompletePurchaseRequest;
 use Omnipay\VerifoneOcius\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
+
 /**
  * Verifone Gateway
  *

@@ -1,10 +1,12 @@
 <?php
 namespace Omnipay\VerifoneOcius\Message;
+
 use DOMDocument;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\RequestInterface;
+
 /**
  * Verifone Response
  */

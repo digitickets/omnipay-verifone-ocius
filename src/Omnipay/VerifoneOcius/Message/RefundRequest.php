@@ -1,8 +1,10 @@
 <?php
 namespace Omnipay\VerifoneOcius\Message;
+
 use DOMDocument;
 use SimpleXMLElement;
 use Omnipay\Common\Message\AbstractRequest;
+
 /**
  * Verifone Refund Request
  */
@@ -10,6 +12,7 @@ class RefundRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'TBA';
     protected $testEndpoint = 'https://txn-test.cxmlpg.com/XML4/commideagateway.asmx';
+
     public function getMerchantId()
     {
         return $this->getParameter('merchantId');
@@ -35,6 +38,7 @@ class RefundRequest extends AbstractRequest
         $data->Transaction->TxnDetails->amount = $this->getAmount();
         $data->Transaction->HistoricTxn->reference = $this->getTransactionReference();
         $data->Transaction->HistoricTxn->method = 'txn_refund';
+
         return $data;
     }
     public function getEndpoint()
@@ -50,6 +54,7 @@ class RefundRequest extends AbstractRequest
         // post to Verifone
         $xml = $data->saveXML();
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $xml)->send();
+
         return $this->response = new Response($this, $httpResponse->getBody());
     }
 }
