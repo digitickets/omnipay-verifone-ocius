@@ -20,38 +20,48 @@ class Response extends AbstractResponse implements RedirectResponseInterface
             throw new InvalidResponseException;
         }
     }
+
     public function isSuccessful()
     {
-        return 1 === (int) $this->data->status;
+        return 1 === (int)$this->data->status;
     }
+
     public function isRedirect()
     {
         // 150 is the 3D Secure status code
-        return 150 === (int) $this->data->status;
+        return 150 === (int)$this->data->status;
     }
+
     public function getTransactionReference()
     {
-        return (string) $this->data->verifone_reference;
+        return (string)$this->data->verifone_reference;
     }
+
     public function getTransactionId()
     {
-        return (string) $this->data->merchantreference;
+        return (string)$this->data->merchantreference;
     }
+
     public function getAuthCode()
     {
-        return (string) (isset($this->data->CardTxn->authcode) ? $this->data->CardTxn->authcode : '');
+        return (string)(isset($this->data->CardTxn->authcode)
+            ? $this->data->CardTxn->authcode : '');
     }
+
     public function getMessage()
     {
-        return (string) $this->data->reason;
+        return (string)$this->data->reason;
     }
+
     public function getRedirectUrl()
     {
         if ($this->isRedirect()) {
-            return (string) $this->data->CardTxn->ThreeDSecure->acs_url;
+            return (string)$this->data->CardTxn->ThreeDSecure->acs_url;
         }
+
         return '';
     }
+
     public function getRedirectMethod()
     {
         return 'POST';
@@ -65,13 +75,14 @@ class Response extends AbstractResponse implements RedirectResponseInterface
             return '';
         }
     }
+
     public function getRedirectData()
     {
 
         return array(
-            'PaReq' => $this->getPaReq(),
+            'PaReq'   => $this->getPaReq(),
             'TermUrl' => $this->getRequest()->getReturnUrl(),
-            'MD' => (string) $this->getTransactionId(),
+            'MD'      => (string)$this->getTransactionId(),
         );
     }
 }

@@ -13,6 +13,7 @@ class CompletePurchaseRequest extends PurchaseRequest
     {
         return $this->httpRequest->request->all();
     }
+
     public function sendData($data)
     {
         return $this->response = new Response($this, $data);
