@@ -10,6 +10,8 @@ This driver supports the remote Verifone Payment Gateway (Ocius) service. Paymen
 
 ## Installation
 
+**Important: Driver requires [PHP's Intl extension](http://php.net/manual/en/book.intl.php) to be installed.**
+
 The Verifone Omnipay driver is installed via [Composer](http://getcomposer.org/). To install, simply add it
 to your `composer.json` file:
 
