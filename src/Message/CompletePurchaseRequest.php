@@ -1,9 +1,6 @@
 <?php
 namespace Omnipay\VerifoneOcius\Message;
 
-use SimpleXMLElement;
-use Omnipay\Common\Exception\InvalidResponseException;
-
 /**
  * Verifone Complete Purchase Request
  */
@@ -16,6 +13,6 @@ class CompletePurchaseRequest extends PurchaseRequest
 
     public function sendData($data)
     {
-        return $this->response = new Response($this, $data);
+        return $this->response = new CompletePurchaseResponse($this, $data);
     }
 }
