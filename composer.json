@@ -1,5 +1,5 @@
 {
-  "name": "pedanticantic/omnipay-verifone-ocius",
+  "name": "coatesap/omnipay-verifone-ocius",
   "type": "library",
   "description": "Verifone (Ocius) driver for the Omnipay payment processing library",
   "keywords": [
@@ -12,9 +12,14 @@
     "pay",
     "payment"
   ],
-  "homepage": "https://github.com/pedanticantic/omnipay-verifone-ocius",
+  "homepage": "https://github.com/coatesap/omnipay-verifone-ocius",
   "license": "MIT",
   "authors": [
+    {
+      "name": "Andy Coates",
+      "email": "andycoatz@gmail.com",
+      "role": "Developer"
+    },
     {
       "name": "Glenn Jenkins",
       "email": "pedanticantic@gmail.com",
