@@ -49,7 +49,7 @@ class CompletePurchaseResponseTest extends TestCase
             'signature'               => base64_decode('VCFDmL2sbvU0Hujp5Pdg+H8pGcroUOtCqa/Q7T7rIvy4Ed5KtaFMuSeEpUmaK6DYwW4wTQVHxvkISkEQbtXQq93+Q6qBuTGGT1DouWQR7OnigqljgI85EwbBpl6113bNNIRLkZ5pp04xj5Sc/Mr4jhBoMeSgQsD3KmDOW9zAHrA='),
             'customerspecifichash'    => ''
         );
-        $response = new CompletePurchaseresponse(
+        $response = new CompletePurchaseResponse(
             $this->getMockRequest(),
             $requestData
         );
