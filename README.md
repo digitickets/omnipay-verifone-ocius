@@ -2,13 +2,15 @@
 
 **Verifone driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/omnipay/verifone)
-[![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
-[![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone-ocius)
+[![Build Status](https://travis-ci.org/coatesap/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/coatesap/omnipay-verifone-ocius)
+[![Latest Stable Version](https://poser.pugx.org/coatesap/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
+[![Total Downloads](https://poser.pugx.org/coatesap/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/coatesap/omnipay-verifone-ocius)
 
-This driver supports the remote Verifone Payment Gateway (Ocius) service. Payment information is sent and received via XML messages. Customers typically stay on the originating website with this method of integration.
+This driver supports the remote Verifone Payment Gateway (Payware Ocius) service. Payment information is sent and received via XML messages. Customers are redirected to the card details page hosted by Verifone.
 
 ## Installation
+
+**Important: Driver requires [PHP's Intl extension](http://php.net/manual/en/book.intl.php) to be installed.**
 
 The Verifone Omnipay driver is installed via [Composer](http://getcomposer.org/). To install, simply add it
 to your `composer.json` file:
@@ -16,7 +18,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "pedanticantic/omnipay-verifone-ocius": "~2.0"
+        "coatesap/omnipay-verifone-ocius": "~1.0"
     }
 }
 ```
@@ -29,8 +31,8 @@ And run composer to update your dependencies:
 ## Basic Usage
 
 This driver supports two transaction types:
- * Purchase (including 3D Secure support if card holder is registered)
- * Refund (you will need to send Verifone's reference from the original transaction as the 'transactionReference' parameter.)
+ * Purchase (including 3D Secure support if card holder is registered).
+ * Refund (you will need to send Verifone's reference from the original transaction as the 'transactionReference' parameter).
 
 For general Omnipay usage instructions, please see the main [Omnipay](https://github.com/omnipay/omnipay)
 repository.
@@ -41,5 +43,5 @@ If you are having general issues with Omnipay, we suggest posting on
 [Stack Overflow](http://stackoverflow.com/). Be sure to add the
 [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
 
-If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/omnipay/verifone/issues),
+If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/coatesap/omnipay-verifone-ocius/issues),
 or better yet, fork the library and submit a pull request.
