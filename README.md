@@ -2,9 +2,9 @@
 
 **Verifone driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/coatesap/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/coatesap/omnipay-verifone-ocius)
-[![Latest Stable Version](https://poser.pugx.org/coatesap/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
-[![Total Downloads](https://poser.pugx.org/coatesap/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/coatesap/omnipay-verifone-ocius)
+[![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius)
+[![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
+[![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone-ocius)
 
 This driver supports the remote Verifone Payment Gateway (Payware Ocius) service. Payment information is sent and received via XML messages. Customers are redirected to the card details page hosted by Verifone.
 
@@ -18,7 +18,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "coatesap/omnipay-verifone-ocius": "~1.0"
+        "pedanticantic/omnipay-verifone-ocius": "~1.0"
     }
 }
 ```
@@ -43,5 +43,5 @@ If you are having general issues with Omnipay, we suggest posting on
 [Stack Overflow](http://stackoverflow.com/). Be sure to add the
 [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
 
-If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/coatesap/omnipay-verifone-ocius/issues),
+If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/pedanticantic/omnipay-verifone-ocius/issues),
 or better yet, fork the library and submit a pull request.
