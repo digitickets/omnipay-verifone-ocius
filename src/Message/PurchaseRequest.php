@@ -301,7 +301,7 @@ class PurchaseRequest extends AbstractRequest
      * This gateway can only cope with basic ASCII values for things like customer
      * names and addresses. Therefore, this method exists to make sure UTF-8 characters
      * are converted to something appropriate.
-     * Eg. "Card holder name value must consist of alphanumerics and the following characters only , . ' - \ / &"
+     * Eg. "Card holder name value must consist of alphanumerics and the following characters only , . - \ / &"
      *
      * @param $string
      *
@@ -310,7 +310,7 @@ class PurchaseRequest extends AbstractRequest
     private function transliterate($string)
     {
         $string = transliterator_transliterate('Latin-ASCII;', $string);
-        $string = preg_replace('/[^a-z0-9 \-&\.,\']/i', '', $string);
+        $string = preg_replace('/[^a-z0-9 \-&\.,]/i', '', $string);
 
         return $string;
     }

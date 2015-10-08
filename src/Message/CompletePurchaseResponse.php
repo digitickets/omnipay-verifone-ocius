@@ -19,8 +19,39 @@ class CompletePurchaseResponse extends AbstractResponse
         return false;
     }
 
+    /**
+     * Method to return the Code, which is the txnresult.
+     * @return mixed|null
+     */
+    public function getCode()
+    {
+        return isset($this->data['txnresult']) ? $this->data['txnresult'] : null;
+    }
+
+    /**
+     * Method to return the Message, which is the authmessage.
+     * @return mixed|null
+     */
+    public function getMessage()
+    {
+        return isset($this->data['authmessage']) ? $this->data['authmessage'] : null;
+    }
+
+    /**
+     * Method to return the TransactionReference, which is the transactionid.
+     * @return mixed|null
+     */
     public function getTransactionReference()
     {
-        return isset($this->data['merchantreference']) ? $this->data['merchantreference'] : null;
+        return isset($this->data['transactionid']) ? $this->data['transactionid'] : null;
+    }
+
+    /**
+     * Method to return the AuthCode, which is the authcode.
+     * @return mixed|null
+     */
+    public function getAuthCode()
+    {
+        return isset($this->data['authcode']) ? $this->data['authcode'] : null;
     }
 }
