@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\VerifoneOcius;
+namespace Pedanticantic\VerifoneOcius;
 
 use Omnipay\Tests\GatewayTestCase;
 
