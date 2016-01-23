@@ -2,7 +2,7 @@
 
 **Verifone driver for the Omnipay PHP payment processing library**
 
-NOTE: I started writing this driver, and then project that I was doing it for was abandoned, so it is not finished (it's about 90% done, though). I am leaving it here in case anyone wants to fork it and complete it. I'm happy for someone else to take ownership of it.
+NOTE: I started writing this driver, and then the project that I was doing it for was abandoned, so it is not finished (it's about 90% done, though). I am leaving it here in case anyone wants to fork it and complete it. I'm happy for someone else to take ownership of it.
 
 [![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius)
 [![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
