@@ -57,6 +57,6 @@ class CompletePurchaseResponseTest extends TestCase
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isCancelled());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('D1234567', $response->getTransactionReference());
+        $this->assertSame('111111', $response->getTransactionReference());
     }
 }
