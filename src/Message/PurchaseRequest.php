@@ -214,11 +214,15 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
 
-        $requestDataXml->merchantreference = $this->getParameter(
-            'transactionId'
-        );
-        $requestDataXml->returnurl = $this->getParameter('returnUrl');
-        $requestDataXml->template = '';
+		if($this->getParameter('transactionId')) {
+			$requestDataXml->merchantreference = $this->getParameter('transactionId');
+		}
+		if($this->getParameter('returnUrl')) {
+			$requestDataXml->returnurl = $this->getParameter('returnUrl');
+		}
+		if($this->getParameter('template')) {
+			$requestDataXml->template = $this->getParameter('template');
+		}
         $requestDataXml->capturemethod = $this->getCaptureMethod();
         
         $card = $this->getCard();
