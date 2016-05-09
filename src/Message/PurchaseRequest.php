@@ -265,28 +265,31 @@ class PurchaseRequest extends AbstractRequest
                 $card->getShippingCity()
             );
         }
-        $basketXml = $customerXml->addChild('basket');
-        $basketXml->shippingamount = '0.00';
-        $basketXml->totalamount = $this->getAmount();
-        $basketXml->vatamount = '0.00';
 
-        /**
-         * @var \Omnipay\Common\Item $item
-         */
-        $basketItemsXml = $basketXml->addChild('basketitems');
-        foreach ($this->getItems() as $item) {
-            $basketItemXml = $basketItemsXml->addChild('basketitem');
-            $basketItemXml->productname = $item->getName();
-            $basketItemXml->quantity = $item->getQuantity();
-            $basketItemXml->unitamount = $item->getPrice();
-            $basketItemXml->vatamount = '0.00';
-            $basketItemXml->vatrate = '0.00';
-            $basketItemXml->lineamount = sprintf(
-                '%0.2f',
-                $item->getPrice() * $item->getQuantity()
-            );
+        if(count($this->getItems()) > 0) {
+            $basketXml = $customerXml->addChild('basket');
+            $basketXml->shippingamount = '0.00';
+            $basketXml->totalamount = $this->getAmount();
+            $basketXml->vatamount = '0.00';
+
+            /**
+             * @var \Omnipay\Common\Item $item
+             */
+            $basketItemsXml = $basketXml->addChild('basketitems');
+            foreach ($this->getItems() as $item) {
+                $basketItemXml = $basketItemsXml->addChild('basketitem');
+                $basketItemXml->productname = $item->getName();
+                $basketItemXml->quantity = $item->getQuantity();
+                $basketItemXml->unitamount = $item->getPrice();
+                $basketItemXml->vatamount = '0.00';
+                $basketItemXml->vatrate = '0.00';
+                $basketItemXml->lineamount = sprintf(
+                    '%0.2f',
+                    $item->getPrice() * $item->getQuantity()
+                );
+            }
         }
-
+        
         $requestDataXml->processingidentifier = $this->getProcessingIdentifier(
         );
         $requestDataXml->registertoken = $this->getRegisterToken();
