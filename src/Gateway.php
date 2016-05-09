@@ -57,7 +57,9 @@ class Gateway extends AbstractGateway
             'deliveryEdit' => 'false',
             'processingIdentifier' => '1',
             'registerToken' => 'false',
-            'showOrderConfirmation' => 'true'
+            'showOrderConfirmation' => 'true',
+			'hideBillingDetails' => false,
+			'hideDeliveryDetails' => false,			
         );
     }
 
@@ -110,7 +112,27 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('deliveryEdit', $value);
     }
+	
+    public function getHideDeliveryDetails()
+    {
+        return $this->getParameter('hideDeliveryDetails');
+    }
 
+    public function setHideDeliveryDetails($value)
+    {
+        return $this->setParameter('hideDeliveryDetails', $value);
+    }
+
+    public function getHideBillingDetails()
+    {
+        return $this->getParameter('hideBillingDetails');
+    }
+
+    public function setHideBillingDetails($value)
+    {
+        return $this->setParameter('hideBillingDetails', $value);
+    }	
+	
     public function getProcessingIdentifier()
     {
         return $this->getParameter('processingIdentifier');

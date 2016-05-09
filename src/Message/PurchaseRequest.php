@@ -213,6 +213,8 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml = $requestDataXml->addChild('merchant');
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
+		$merchantXml->hideBillingDetails = $this->getHideBillingDetails();
+		$merchantXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
 
 		if($this->getParameter('transactionId')) {
 			$requestDataXml->merchantreference = $this->getParameter('transactionId');
@@ -316,7 +318,12 @@ class PurchaseRequest extends AbstractRequest
      */
     private function transliterate($string)
     {
-        $string = transliterator_transliterate('Latin-ASCII;', $string);
+        if(function_exists('transliterator_transliterate')) {
+            $string = transliterator_transliterate('Latin-ASCII;', $string);
+        }
+        else {
+            $string = iconv("utf-8", "us-ascii//TRANSLIT", $string);
+        }
         $string = preg_replace('/[^a-z0-9 \-&\.,]/i', '', $string);
 
         return $string;
