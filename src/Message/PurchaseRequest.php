@@ -220,11 +220,11 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->returnurl = $this->getParameter('returnUrl');
         $requestDataXml->template = '';
         $requestDataXml->capturemethod = $this->getCaptureMethod();
-
-        $customerXml = $requestDataXml->addChild('customer');
-        $customerXml->deliveryedit = $this->getDeliveryEdit();
+        
         $card = $this->getCard();
         if ($card) {
+			$customerXml = $requestDataXml->addChild('customer');
+			$customerXml->deliveryedit = $this->getDeliveryEdit();
             $customerXml->email = $card->getEmail();
             $customerXml->firstname = $this->transliterate(
                 $card->getFirstName()
