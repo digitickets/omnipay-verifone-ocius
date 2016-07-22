@@ -233,8 +233,6 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml = $requestDataXml->addChild('merchant');
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
-		$merchantXml->hideBillingDetails = $this->getHideBillingDetails();
-		$merchantXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
 
 		if($this->getParameter('transactionId')) {
 			$requestDataXml->merchantreference = $this->getParameter('transactionId');
@@ -322,7 +320,8 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->showorderconfirmation
             = $this->getShowOrderConfirmation();
         $requestDataXml->transactionvalue = $this->getAmount();
-
+        $requestDataXml->hideBillingDetails = $this->getHideBillingDetails();
+        $requestDataXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
         return $requestDataXml->asXML();
     }
 
