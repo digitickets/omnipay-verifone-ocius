@@ -63,4 +63,25 @@ class CompletePurchaseResponse extends AbstractResponse
     {
         return isset($this->data['authcode']) ? $this->data['authcode'] : null;
     }
+
+    /**
+     * Method to verify notification signature
+     * @param $public_key string - a PEM public key
+     * @return boolean true if signature verified, false if not
+     */
+    public function isValidSignature($public_key)
+    {
+        $data = '';
+        $signature = '';
+        foreach( $this->data as $key=>$value ) {
+            if( $key == 'signature' ) {
+                $signature = base64_decode($value);
+            }
+            else {
+                $data .= $value;
+            }
+        }
+
+        return openssl_verify( $data, $signature, $public_key, OPENSSL_ALGO_SHA1 );
+    }
 }
