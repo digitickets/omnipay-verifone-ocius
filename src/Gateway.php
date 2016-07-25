@@ -37,6 +37,26 @@ class Gateway extends AbstractGateway
         return $this->setParameter('merchantId', $value);
     }
 
+    public function getKeyName()
+    {
+        return $this->getParameter('keyName');
+    }
+
+    public function setKeyName($value)
+    {
+        return $this->setParameter('keyName', $value);
+    }
+
+    public function getKeyValue()
+    {
+        return $this->getParameter('keyValue');
+    }
+
+    public function setKeyValue($value)
+    {
+        return $this->setParameter('keyValue', $value);
+    }
+
     public function getSystemGuid()
     {
         return $this->getParameter('systemGuid');

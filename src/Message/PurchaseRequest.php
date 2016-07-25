@@ -42,6 +42,26 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('systemGuid', $value);
     }
 
+    public function getKeyName()
+    {
+        return $this->getParameter('keyName');
+    }
+
+    public function setKeyName($value)
+    {
+        return $this->setParameter('keyName', $value);
+    }
+
+    public function getKeyValue()
+    {
+        return $this->getParameter('keyValue');
+    }
+
+    public function setKeyValue($value)
+    {
+        return $this->setParameter('keyValue', $value);
+    }
+
     public function getApiVersion()
     {
         return $this->getParameter('apiVersion');
@@ -194,9 +214,14 @@ class PurchaseRequest extends AbstractRequest
 
         $postDataXml->api = $this->getApiVersion();
         $postDataXml->merchantid = $this->getMerchantId();
+        if($this->getKeyName()) {
+            $postDataXml->keyname = $this->getKeyName();
+        }
+        else {
+            $postDataXml->addChild('keyname');
+        }
         $postDataXml->requesttype = 'eftrequest';
         $postDataXml->requestdata = $this->getInnerXml();
-        $postDataXml->addChild('keyname');
 
         $postData = $postDataXml->asXML();
 
@@ -322,7 +347,13 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->transactionvalue = $this->getAmount();
         $requestDataXml->hideBillingDetails = $this->getHideBillingDetails();
         $requestDataXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
-        return $requestDataXml->asXML();
+
+        if($this->getKeyName()) {
+            return base64_encode(openssl_encrypt($requestDataXml->asXML(), 'AES-256-CBC', base64_decode($this->getKeyValue()), OPENSSL_RAW_DATA, '{{{{{{{{{{{{{{{{'));
+        }
+        else {
+            return $requestDataXml->asXML();
+        }
     }
 
     /**
