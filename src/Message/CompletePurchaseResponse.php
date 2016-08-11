@@ -38,6 +38,15 @@ class CompletePurchaseResponse extends AbstractResponse
     }
 
     /**
+     * Method to return the MessageType, which is the messagetype
+     * @return mixed|null
+     */
+    public function getMessageType()
+    {
+        return isset($this->data['messagetype']) ? $this->data['messagetype'] : null;
+    }
+
+    /**
      * Method to return the TransactionReference, which is the transactionid in Verifone (confusing!).
      * @return mixed|null
      */
