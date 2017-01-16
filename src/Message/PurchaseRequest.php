@@ -42,6 +42,26 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('systemGuid', $value);
     }
 
+    public function getKeyName()
+    {
+        return $this->getParameter('keyName');
+    }
+
+    public function setKeyName($value)
+    {
+        return $this->setParameter('keyName', $value);
+    }
+
+    public function getKeyValue()
+    {
+        return $this->getParameter('keyValue');
+    }
+
+    public function setKeyValue($value)
+    {
+        return $this->setParameter('keyValue', $value);
+    }
+
     public function getApiVersion()
     {
         return $this->getParameter('apiVersion');
@@ -91,6 +111,26 @@ class PurchaseRequest extends AbstractRequest
     {
         return $this->setParameter('deliveryEdit', $value);
     }
+
+    public function getHideDeliveryDetails()
+    {
+        return $this->getParameter('hideDeliveryDetails');
+    }
+
+    public function setHideDeliveryDetails($value)
+    {
+        return $this->setParameter('hideDeliveryDetails', $value);
+    }
+
+    public function getHideBillingDetails()
+    {
+        return $this->getParameter('hideBillingDetails');
+    }
+
+    public function setHideBillingDetails($value)
+    {
+        return $this->setParameter('hideBillingDetails', $value);
+    }   
 
     public function getProcessingIdentifier()
     {
@@ -174,9 +214,14 @@ class PurchaseRequest extends AbstractRequest
 
         $postDataXml->api = $this->getApiVersion();
         $postDataXml->merchantid = $this->getMerchantId();
+        if($this->getKeyName()) {
+            $postDataXml->keyname = $this->getKeyName();
+        }
+        else {
+            $postDataXml->addChild('keyname');
+        }
         $postDataXml->requesttype = 'eftrequest';
         $postDataXml->requestdata = $this->getInnerXml();
-        $postDataXml->addChild('keyname');
 
         $postData = $postDataXml->asXML();
 
@@ -214,17 +259,21 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
 
-        $requestDataXml->merchantreference = $this->getParameter(
-            'transactionId'
-        );
-        $requestDataXml->returnurl = $this->getParameter('returnUrl');
-        $requestDataXml->template = '';
+		if($this->getParameter('transactionId')) {
+			$requestDataXml->merchantreference = $this->getParameter('transactionId');
+		}
+		if($this->getParameter('returnUrl')) {
+			$requestDataXml->returnurl = $this->getParameter('returnUrl');
+		}
+		if($this->getParameter('template')) {
+			$requestDataXml->template = $this->getParameter('template');
+		}
         $requestDataXml->capturemethod = $this->getCaptureMethod();
-
-        $customerXml = $requestDataXml->addChild('customer');
-        $customerXml->deliveryedit = $this->getDeliveryEdit();
+        
         $card = $this->getCard();
         if ($card) {
+			$customerXml = $requestDataXml->addChild('customer');
+			$customerXml->deliveryedit = $this->getDeliveryEdit();
             $customerXml->email = $card->getEmail();
             $customerXml->firstname = $this->transliterate(
                 $card->getFirstName()
@@ -265,36 +314,46 @@ class PurchaseRequest extends AbstractRequest
                 $card->getShippingCity()
             );
         }
-        $basketXml = $customerXml->addChild('basket');
-        $basketXml->shippingamount = '0.00';
-        $basketXml->totalamount = $this->getAmount();
-        $basketXml->vatamount = '0.00';
 
-        /**
-         * @var \Omnipay\Common\Item $item
-         */
-        $basketItemsXml = $basketXml->addChild('basketitems');
-        foreach ($this->getItems() as $item) {
-            $basketItemXml = $basketItemsXml->addChild('basketitem');
-            $basketItemXml->productname = $item->getName();
-            $basketItemXml->quantity = $item->getQuantity();
-            $basketItemXml->unitamount = $item->getPrice();
-            $basketItemXml->vatamount = '0.00';
-            $basketItemXml->vatrate = '0.00';
-            $basketItemXml->lineamount = sprintf(
-                '%0.2f',
-                $item->getPrice() * $item->getQuantity()
-            );
+        if(count($this->getItems()) > 0) {
+            $basketXml = $customerXml->addChild('basket');
+            $basketXml->shippingamount = '0.00';
+            $basketXml->totalamount = $this->getAmount();
+            $basketXml->vatamount = '0.00';
+
+            /**
+             * @var \Omnipay\Common\Item $item
+             */
+            $basketItemsXml = $basketXml->addChild('basketitems');
+            foreach ($this->getItems() as $item) {
+                $basketItemXml = $basketItemsXml->addChild('basketitem');
+                $basketItemXml->productname = $item->getName();
+                $basketItemXml->quantity = $item->getQuantity();
+                $basketItemXml->unitamount = $item->getPrice();
+                $basketItemXml->vatamount = '0.00';
+                $basketItemXml->vatrate = '0.00';
+                $basketItemXml->lineamount = sprintf(
+                    '%0.2f',
+                    $item->getPrice() * $item->getQuantity()
+                );
+            }
         }
-
+        
         $requestDataXml->processingidentifier = $this->getProcessingIdentifier(
         );
         $requestDataXml->registertoken = $this->getRegisterToken();
         $requestDataXml->showorderconfirmation
             = $this->getShowOrderConfirmation();
         $requestDataXml->transactionvalue = $this->getAmount();
+        $requestDataXml->hideBillingDetails = $this->getHideBillingDetails();
+        $requestDataXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
 
-        return $requestDataXml->asXML();
+        if($this->getKeyName()) {
+            return base64_encode(openssl_encrypt($requestDataXml->asXML(), 'AES-256-CBC', base64_decode($this->getKeyValue()), OPENSSL_RAW_DATA, '{{{{{{{{{{{{{{{{'));
+        }
+        else {
+            return $requestDataXml->asXML();
+        }
     }
 
     /**
@@ -309,7 +368,12 @@ class PurchaseRequest extends AbstractRequest
      */
     private function transliterate($string)
     {
-        $string = transliterator_transliterate('Latin-ASCII;', $string);
+        if(function_exists('transliterator_transliterate')) {
+            $string = transliterator_transliterate('Latin-ASCII;', $string);
+        }
+        else {
+            $string = iconv("utf-8", "us-ascii//TRANSLIT", $string);
+        }
         $string = preg_replace('/[^a-z0-9 \-&\.,]/i', '', $string);
 
         return $string;

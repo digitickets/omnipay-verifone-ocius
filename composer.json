@@ -1,5 +1,5 @@
 {
-  "name": "coatesap/omnipay-verifone-ocius",
+  "name": "jessicadigital/omnipay-verifone-ocius",
   "type": "library",
   "description": "Verifone (Ocius) driver for the Omnipay payment processing library",
   "keywords": [
