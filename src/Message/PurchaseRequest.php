@@ -9,8 +9,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    protected $liveEndpoint = 'TBA';
-    protected $testEndpoint = 'https://paypage2-test.cxmlpg.com/paypage.aspx';
+    protected $liveEndpoint = 'https://pp2.cxmlpg.com/PayPage.aspx';
+    protected $testEndpoint = 'https://paypage2-cst.cxmlpg.com/paypage.aspx';
 
     public function setAccountId($value)
     {
@@ -130,7 +130,7 @@ class PurchaseRequest extends AbstractRequest
     public function setHideBillingDetails($value)
     {
         return $this->setParameter('hideBillingDetails', $value);
-    }   
+    }
 
     public function getProcessingIdentifier()
     {
@@ -269,7 +269,7 @@ class PurchaseRequest extends AbstractRequest
 			$requestDataXml->template = $this->getParameter('template');
 		}
         $requestDataXml->capturemethod = $this->getCaptureMethod();
-        
+
         $card = $this->getCard();
         if ($card) {
 			$customerXml = $requestDataXml->addChild('customer');
@@ -338,7 +338,7 @@ class PurchaseRequest extends AbstractRequest
                 );
             }
         }
-        
+
         $requestDataXml->processingidentifier = $this->getProcessingIdentifier(
         );
         $requestDataXml->registertoken = $this->getRegisterToken();
