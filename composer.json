@@ -1,5 +1,5 @@
 {
-  "name": "jessicadigital/omnipay-verifone-ocius",
+  "name": "digitickets/omnipay-verifone-ocius",
   "type": "library",
   "description": "Verifone (Ocius) driver for the Omnipay payment processing library",
   "keywords": [
@@ -27,7 +27,7 @@
     }
   ],
   "autoload": {
-    "psr-4": { "Pedanticantic\\VerifoneOcius\\" : "src/" }
+    "psr-4": { "Omnipay\\VerifoneOcius\\" : "src/" }
   },
   "require": {
     "omnipay/common": "~2.0"

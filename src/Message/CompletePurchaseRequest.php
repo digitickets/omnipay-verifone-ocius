@@ -1,5 +1,5 @@
 <?php
-namespace Pedanticantic\VerifoneOcius\Message;
+namespace Omnipay\VerifoneOcius\Message;
 
 /**
  * Verifone Complete Purchase Request

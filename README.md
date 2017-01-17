@@ -4,9 +4,9 @@
 
 NOTE: I started writing this driver, and then the project that I was doing it for was abandoned, so it is not finished (it's about 90% done, though). I am leaving it here in case anyone wants to fork it and complete it. I'm happy for someone else to take ownership of it.
 
-[![Build Status](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/pedanticantic/omnipay-verifone-ocius)
-[![Latest Stable Version](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
-[![Total Downloads](https://poser.pugx.org/pedanticantic/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/pedanticantic/omnipay-verifone-ocius)
+[![Build Status](https://travis-ci.org/digitickets/omnipay-verifone-ocius.png?branch=master)](https://travis-ci.org/digitickets/omnipay-verifone-ocius)
+[![Latest Stable Version](https://poser.pugx.org/digitickets/omnipay-verifone-ocius/version.png)](https://packagist.org/packages/omnipay/verifone)
+[![Total Downloads](https://poser.pugx.org/digitickets/omnipay-verifone-ocius/d/total.png)](https://packagist.org/packages/digitickets/omnipay-verifone-ocius)
 
 This driver supports the remote Verifone Payment Gateway (Payware Ocius) service. Payment information is sent and received via XML messages. Customers are redirected to the card details page hosted by Verifone.
 
@@ -20,7 +20,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "pedanticantic/omnipay-verifone-ocius": "~1.0"
+        "digitickets/omnipay-verifone-ocius": "~1.0"
     }
 }
 ```
@@ -45,5 +45,5 @@ If you are having general issues with Omnipay, we suggest posting on
 [Stack Overflow](http://stackoverflow.com/). Be sure to add the
 [omnipay tag](http://stackoverflow.com/questions/tagged/omnipay) so it can be easily found.
 
-If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/pedanticantic/omnipay-verifone-ocius/issues),
+If you believe you have found a bug in this driver, please report it using the [GitHub issue tracker](https://github.com/digitickets/omnipay-verifone-ocius/issues),
 or better yet, fork the library and submit a pull request.

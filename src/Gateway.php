@@ -1,8 +1,8 @@
 <?php
-namespace Pedanticantic\VerifoneOcius;
+namespace Omnipay\VerifoneOcius;
 
-use Pedanticantic\VerifoneOcius\Message\CompletePurchaseRequest;
-use Pedanticantic\VerifoneOcius\Message\PurchaseRequest;
+use Omnipay\VerifoneOcius\Message\CompletePurchaseRequest;
+use Omnipay\VerifoneOcius\Message\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 
 /**
@@ -79,7 +79,7 @@ class Gateway extends AbstractGateway
             'registerToken' => 'false',
             'showOrderConfirmation' => 'true',
 			'hideBillingDetails' => 'false',
-			'hideDeliveryDetails' => 'false',			
+			'hideDeliveryDetails' => 'false',
         );
     }
 
@@ -132,7 +132,7 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('deliveryEdit', $value);
     }
-	
+
     public function getHideDeliveryDetails()
     {
         return $this->getParameter('hideDeliveryDetails');
@@ -151,8 +151,8 @@ class Gateway extends AbstractGateway
     public function setHideBillingDetails($value)
     {
         return $this->setParameter('hideBillingDetails', $value);
-    }	
-	
+    }
+
     public function getProcessingIdentifier()
     {
         return $this->getParameter('processingIdentifier');
@@ -186,7 +186,7 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest(
-            '\Pedanticantic\VerifoneOcius\Message\PurchaseRequest',
+            '\Omnipay\VerifoneOcius\Message\PurchaseRequest',
             $parameters
         );
     }
@@ -194,7 +194,7 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = array())
     {
         return $this->createRequest(
-            '\Pedanticantic\VerifoneOcius\Message\CompletePurchaseRequest',
+            '\Omnipay\VerifoneOcius\Message\CompletePurchaseRequest',
             $parameters
         );
     }
