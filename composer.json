@@ -12,7 +12,7 @@
     "pay",
     "payment"
   ],
-  "homepage": "https://github.com/coatesap/omnipay-verifone-ocius",
+  "homepage": "https://github.com/digitickets/omnipay-verifone-ocius",
   "license": "MIT",
   "authors": [
     {
