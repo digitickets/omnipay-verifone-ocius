@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\VerifoneOcius\Message;
+namespace Digitickets\VerifoneOcius\Message;
 
 use Omnipay\Tests\TestCase;
 

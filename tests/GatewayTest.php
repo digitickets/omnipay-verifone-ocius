@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\VerifoneOcius;
+namespace Digitickets\VerifoneOcius;
 
 use Omnipay\Tests\GatewayTestCase;
 
