@@ -78,8 +78,8 @@ class Gateway extends AbstractGateway
             'processingIdentifier' => '1',
             'registerToken' => 'false',
             'showOrderConfirmation' => 'true',
-			'hideBillingDetails' => 'false',
-			'hideDeliveryDetails' => 'false',
+            'hideBillingDetails' => 'false',
+            'hideDeliveryDetails' => 'false',
         );
     }
 

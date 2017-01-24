@@ -214,10 +214,9 @@ class PurchaseRequest extends AbstractRequest
 
         $postDataXml->api = $this->getApiVersion();
         $postDataXml->merchantid = $this->getMerchantId();
-        if($this->getKeyName()) {
+        if ($this->getKeyName()) {
             $postDataXml->keyname = $this->getKeyName();
-        }
-        else {
+        } else {
             $postDataXml->addChild('keyname');
         }
         $postDataXml->requesttype = 'eftrequest';
@@ -259,21 +258,21 @@ class PurchaseRequest extends AbstractRequest
         $merchantXml->merchantid = $this->getMerchantId();
         $merchantXml->systemguid = $this->getSystemGuid();
 
-		if($this->getParameter('transactionId')) {
-			$requestDataXml->merchantreference = $this->getParameter('transactionId');
-		}
-		if($this->getParameter('returnUrl')) {
-			$requestDataXml->returnurl = $this->getParameter('returnUrl');
-		}
-		if($this->getParameter('template')) {
-			$requestDataXml->template = $this->getParameter('template');
-		}
+        if ($this->getParameter('transactionId')) {
+            $requestDataXml->merchantreference = $this->getParameter('transactionId');
+        }
+        if ($this->getParameter('returnUrl')) {
+            $requestDataXml->returnurl = $this->getParameter('returnUrl');
+        }
+        if ($this->getParameter('template')) {
+            $requestDataXml->template = $this->getParameter('template');
+        }
         $requestDataXml->capturemethod = $this->getCaptureMethod();
 
         $card = $this->getCard();
         if ($card) {
-			$customerXml = $requestDataXml->addChild('customer');
-			$customerXml->deliveryedit = $this->getDeliveryEdit();
+            $customerXml = $requestDataXml->addChild('customer');
+            $customerXml->deliveryedit = $this->getDeliveryEdit();
             $customerXml->email = $card->getEmail();
             $customerXml->firstname = $this->transliterate(
                 $card->getFirstName()
@@ -315,7 +314,7 @@ class PurchaseRequest extends AbstractRequest
             );
         }
 
-        if(count($this->getItems()) > 0) {
+        if (count($this->getItems()) > 0) {
             $basketXml = $customerXml->addChild('basket');
             $basketXml->shippingamount = '0.00';
             $basketXml->totalamount = $this->getAmount();
@@ -348,10 +347,17 @@ class PurchaseRequest extends AbstractRequest
         $requestDataXml->hideBillingDetails = $this->getHideBillingDetails();
         $requestDataXml->hideDeliveryDetails = $this->getHideDeliveryDetails();
 
-        if($this->getKeyName()) {
-            return base64_encode(openssl_encrypt($requestDataXml->asXML(), 'AES-256-CBC', base64_decode($this->getKeyValue()), OPENSSL_RAW_DATA, '{{{{{{{{{{{{{{{{'));
-        }
-        else {
+        if ($this->getKeyName()) {
+            return base64_encode(
+                openssl_encrypt(
+                    $requestDataXml->asXML(),
+                    'AES-256-CBC',
+                    base64_decode($this->getKeyValue()),
+                    OPENSSL_RAW_DATA,
+                    '{{{{{{{{{{{{{{{{'
+                )
+            );
+        } else {
             return $requestDataXml->asXML();
         }
     }
@@ -368,10 +374,9 @@ class PurchaseRequest extends AbstractRequest
      */
     private function transliterate($string)
     {
-        if(function_exists('transliterator_transliterate')) {
+        if (function_exists('transliterator_transliterate')) {
             $string = transliterator_transliterate('Latin-ASCII;', $string);
-        }
-        else {
+        } else {
             $string = iconv("utf-8", "us-ascii//TRANSLIT", $string);
         }
         $string = preg_replace('/[^a-z0-9 \-&\.,]/i', '', $string);

@@ -82,11 +82,10 @@ class CompletePurchaseResponse extends AbstractResponse
     {
         $data = '';
         $signature = '';
-        foreach( $this->data as $key=>$value ) {
-            if( $key == 'signature' ) {
+        foreach ($this->data as $key => $value) {
+            if ($key == 'signature') {
                 $signature = base64_decode($value);
-            }
-            else {
+            } else {
                 $data .= $value;
             }
         }
