@@ -90,6 +90,6 @@ class CompletePurchaseResponse extends AbstractResponse
             }
         }
 
-        return openssl_verify( $data, $signature, $public_key, OPENSSL_ALGO_SHA1 );
+        return openssl_verify($data, $signature, $public_key, OPENSSL_ALGO_SHA1);
     }
 }
