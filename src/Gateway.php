@@ -186,11 +186,17 @@ class Gateway extends AbstractGateway
 
     public function purchase(array $parameters = array())
     {
-        return $this->createRequest(PurchaseRequest::class, $parameters);
+        return $this->createRequest(
+            '\DigiTickets\VerifoneOcius\Message\PurchaseRequest',
+            $parameters
+        );
     }
 
     public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+        return $this->createRequest(
+            '\DigiTickets\VerifoneOcius\Message\CompletePurchaseRequest',
+            $parameters
+        );
     }
 }
