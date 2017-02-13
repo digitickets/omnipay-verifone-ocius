@@ -1,7 +1,8 @@
 <?php
 
-namespace Digitickets\VerifoneOcius;
+namespace DigiTicketsTests\VerifoneOcius;
 
+use DigiTickets\VerifoneOcius\Gateway;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase

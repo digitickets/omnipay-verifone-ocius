@@ -1,7 +1,8 @@
 <?php
 
-namespace Digitickets\VerifoneOcius\Message;
+namespace DigiTicketsTests\VerifoneOcius\Message;
 
+use DigiTickets\VerifoneOcius\Message\CompletePurchaseResponse;
 use Omnipay\Tests\TestCase;
 
 class CompletePurchaseResponseTest extends TestCase

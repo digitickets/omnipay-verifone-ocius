@@ -1,5 +1,5 @@
 <?php
-namespace Digitickets\VerifoneOcius\Message;
+namespace DigiTickets\VerifoneOcius\Message;
 
 /**
  * Verifone Complete Purchase Request

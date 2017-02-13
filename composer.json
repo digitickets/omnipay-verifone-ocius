@@ -27,7 +27,14 @@
     }
   ],
   "autoload": {
-    "psr-4": { "Digitickets\\VerifoneOcius\\" : "src/" }
+    "psr-4": {
+      "DigiTickets\\VerifoneOcius\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DigiTicketsTests\\VerifoneOcius\\": "tests/"
+    }
   },
   "require": {
     "omnipay/common": "~2.0"

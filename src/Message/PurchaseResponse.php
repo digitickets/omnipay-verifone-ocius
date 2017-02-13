@@ -1,6 +1,6 @@
 <?php
 
-namespace Digitickets\VerifoneOcius\Message;
+namespace DigiTickets\VerifoneOcius\Message;
 
 use Omnipay\Common\Message\AbstractResponse;
 use Omnipay\Common\Message\RedirectResponseInterface;
